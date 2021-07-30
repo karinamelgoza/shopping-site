@@ -72,13 +72,11 @@ def show_shopping_cart():
             quantity = session['cart'][melon_id]
             total_per_melon = melon.price * quantity
             setattr(melon, 'quantity', quantity)
-            setattr(melon, 'total_per_melon', total_per_melon)
+            setattr(melon, 'total_per_melon', format(total_per_melon, '.2f'))
             items.append(melon)
             total += total_per_melon
-        print(items)
-        print(total)
 
-        return render_template("cart.html", items=items, total=total)
+        return render_template("cart.html", items=items, total=format(total, '.2f'))
     except:
         flash('no items added to cart')
         return redirect('/melons')
@@ -99,7 +97,7 @@ def show_shopping_cart():
     # been added to the session
 
 
-@app.route("/add_to_cart/<melon_id>")
+@ app.route("/add_to_cart/<melon_id>")
 def add_to_cart(melon_id):
     """Add a melon to cart and redirect to shopping cart page.
 
@@ -131,14 +129,14 @@ def add_to_cart(melon_id):
     return redirect('/cart')
 
 
-@app.route("/login", methods=["GET"])
+@ app.route("/login", methods=["GET"])
 def show_login():
     """Show login form."""
 
     return render_template("login.html")
 
 
-@app.route("/login", methods=["POST"])
+@ app.route("/login", methods=["POST"])
 def process_login():
     """Log user into site.
 
@@ -176,7 +174,15 @@ def process_login():
     # - do the same if a Customer with that email doesn't exist
 
 
-@app.route("/checkout")
+@ app.route('/logout')
+def process_logout():
+    session.pop('logged_in_customer_email', None)
+    flash('Logged out')
+
+    return redirect('/melons')
+
+
+@ app.route("/checkout")
 def checkout():
     """Checkout customer, process payment, and ship melons."""
 

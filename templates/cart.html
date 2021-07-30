@@ -17,7 +17,7 @@
         <tr>
             <td>{{melon.common_name}}</td>
             <td>{{melon.quantity}}</td>
-            <td>${{melon.price}}</td>
+            <td>{{melon.price_str()}}</td>
             <td>${{melon.total_per_melon}}</td>
         </tr>
         {% endfor %}
